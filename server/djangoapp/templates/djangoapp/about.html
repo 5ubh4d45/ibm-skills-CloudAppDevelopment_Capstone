@@ -1,7 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Dealership Review</title>
+
+    {% load static %}
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -42,26 +45,105 @@
   </head>
 
   <body>
-    <!--Add about us -->
     <!--Add a nav bar here -->
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark-subtle">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{% url 'djangoapp:index' %}"
-            >Dealership Reviews</a
-          >
-        </div>
-        <div class="navbar-text">
-          <a href="{% url 'djangoapp:about' %}">About Us</a>
+        <a class="navbar-brand" href="{% url 'djangoapp:index' %}"
+          >Dealership Reviews</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'djangoapp:index' %}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'djangoapp:contact' %}"
+                >Contact Us</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'djangoapp:about' %}"
+                >About Us</a
+              >
+            </li>
+          </ul>
+          <div>
+            {% if user.is_authenticated %}
+            <ui class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="btn fw-bold" href="#"
+                  >{{ user.first_name }}{{ user.username }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="btn btn-outline-danger fw-bold"
+                  href="{% url 'djangoapp:logout' %}"
+                  >Logout</a
+                >
+              </li>
+            </ui>
+            {% else %}
+            <form
+              class="d-flex form-check-inline"
+              action="{% url 'djangoapp:login' %}"
+              method="post"
+              role="login"
+            >
+              {% csrf_token %}
+              <input
+                class="form-control me-2"
+                type="username"
+                placeholder="Enter Username"
+                name="username"
+                aria-label="Username"
+              />
+              <input
+                class="form-control me-2"
+                type="password"
+                placeholder="Enter Password"
+                name="password"
+                aria-label="Password"
+              />
+              <button class="btn btn-success m-1" type="submit">Login</button>
+              <a
+                class="btn btn-outline-success m-1"
+                href="{% url 'djangoapp:register' %}"
+                >Signup</a
+              >
+            </form>
+            {% endif %}
+          </div>
         </div>
       </div>
     </nav>
-    <div class="container-fluid">
-      <div>
-        <p class="font-monospace">
-          Welcome to Best Cars dealership, home to the best cars in North America.
-          We sell domestic and imported cars at reasonable prices.
+
+    <!--Add about us -->
+    <div class="container-fluid my-md-5">
+      <div class="text-center vw-100">
+        <h1>About Us</h1>
+        <br />
+        <p>
+          Welcome to Best Cars dealership, home to the best cars in North
+          America.
         </p>
+        <p>We sell domestic and imported cars at reasonable prices.</p>
       </div>
     </div>
   </body>
