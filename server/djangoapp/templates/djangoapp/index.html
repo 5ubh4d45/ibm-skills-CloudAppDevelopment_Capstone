@@ -70,7 +70,7 @@
             {% if user.is_authenticated %}
             <ui class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="btn fw-bold" href="#">{{ user.first_name }}{{ user.username }}</a>
+                <a class="btn fw-bold" href="#">({{ user.username }})</a>
               </li>
               <li class="nav-item">
                 <a class="btn btn-outline-danger fw-bold" href="{% url 'djangoapp:logout' %}">Logout</a>
