@@ -77,33 +77,17 @@
     </div>
   </nav>
 
-  <!--Add a registration form here -->
-  <div class="container-fluid my-md-2 w-50">
-    <h2 class="text-center m-3">Sign Up</h2>
-    <br />
-    <form action="{% url 'djangoapp:register' %}" method="post" id="signup">
-
-      {% csrf_token %}
-
-      <div class="mb-3">
-        <label for="username" class="form-label">User Name</label>
-        <input type="text" class="form-control" placeholder="Enter User Name" name="username" id="username" />
-      </div>
-      <div class="mb-3">
-        <label for="firstname" class="form-label">First Name</label>
-        <input type="text" class="form-control" placeholder="Enter First Name" name="firstname" id="firstname" />
-      </div>
-      <div class="mb-3">
-        <label for="lastname" class="form-label">Last Name</label>
-        <input type="text" class="form-control" placeholder="Enter Last Name" name="lastname" id="lastname" />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" />
-      </div>
-
-      <button type="submit" class="btn btn-success">Submit</button>
-    </form>
+  <!--Add about us -->
+  <div class="container-fluid my-md-5">
+    <div class="text-center vw-100">
+      <h1>About Us</h1>
+      <br />
+      <p>
+        Welcome to Best Cars dealership, home to the best cars in North
+        America.
+      </p>
+      <p>We sell domestic and imported cars at reasonable prices.</p>
+    </div>
   </div>
 </body>
 
