@@ -21,11 +21,11 @@ jobs: # list of things to do
 
       - name: Install Dependencies
         run: npm install
-        working-directory: functions/sample/nodejs
+        working-directory: functions/nodejs
 
       - name: Code Linting
         run: npm run lint
-        working-directory: functions/sample/nodejs
+        working-directory: functions/nodejs
     
 
   lint_function_python:
@@ -44,7 +44,7 @@ jobs: # list of things to do
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with Pylint
         run: pylint *.py
-        working-directory: functions/sample/python
+        working-directory: functions/python
 
   lint_django_server:
     name: Linting Django Server 
