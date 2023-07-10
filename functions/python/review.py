@@ -61,7 +61,26 @@ def main(params : dict):
     
     # post new review
     elif REQ_METHOD == "post":
+        try:
+            review = params.get("review")
+        except:
+            return {
+                "statusCode" : 400,
+                "body" : {
+                    "mssg" : "no review found in request"
+                }
+            }
+        
+        data : dict = client.post_document(
+            db=DB_NAME,
+            document=review
+        ).get_result()
+        
+        return {"body" : data }
 
-        return {"body" : {"data" : REQ_METHOD} }
-
-    return {"body" : {"dict" : params} }
+    return {
+        "statusCode" : 400,
+        "body" : {
+            "mssg" : "please use supported request method"
+        }
+    }
