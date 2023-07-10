@@ -11,10 +11,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@cloudant/cloudant": "^4.4.0"
-  },
   "devDependencies": {
-    "eslint": "^8.27.0"
+    "eslint": "^8.44.0"
+  },
+  "dependencies": {
+    "@ibm-cloud/cloudant": "^0.5.4"
   }
 }
