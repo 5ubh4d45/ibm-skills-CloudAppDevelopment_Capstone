@@ -10,6 +10,8 @@ from datetime import datetime
 import logging
 import json
 
+from djangoapp.restapis import get_dealer_reviews_from_cf, get_dealers_from_cf, get_dealers_from_cf_by_state, post_request
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -95,17 +97,84 @@ def registration_request(request :HttpRequest):
 
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
-def get_dealerships(request):
+def get_dealerships(request : HttpRequest):
     context = {}
     if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
-
+        # return render(request, 'djangoapp/index.html', context)
+        url = "https://au-syd.functions.appdomain.cloud/api/v1/web/330077d3-9d1d-4995-a6ca-bcdbccd5086f/api/dealership"
+        # Get dealers from the URL
+        dealerships = get_dealers_from_cf(url)
+        # dealerships = get_dealers_from_cf_by_state(url, "Texas")
+        # Concat all dealer's short name
+        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # Return a list of dealer short name
+        return HttpResponse(dealer_names)
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
 # ...
+def get_dealer_details(request: HttpRequest, dealer_id):
+    context = {}
+    if request.method == "GET":
+        url = "https://au-syd.functions.appdomain.cloud/api/v1/web/330077d3-9d1d-4995-a6ca-bcdbccd5086f/api/review"
+
+        # Get dealer's reviewfrom the URL
+        reviews = get_dealer_reviews_from_cf(url, dealer_id=dealer_id)
+
+        # add review key from each reviews for a dealer to a result list
+        result = []
+        for review in reviews:
+            result.append(f"Review: {review.review} Sentiment: {review.sentiment} \n")
+        
+        return HttpResponse(result)
+
+
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+def add_review(request: HttpRequest, dealer_id):
+    context = {}
+    
+    # only authenticated users can submit a review
 
+    if request.method == "GET" and request.user.is_authenticated:
+        url = "https://au-syd.functions.appdomain.cloud/api/v1/web/330077d3-9d1d-4995-a6ca-bcdbccd5086f/api/review"
+        
+        # body: dict = json.loads(request.body)
+
+        # review = {
+        #     "id": body["id"],
+        #     "name": body["name"],
+        #     "dealership": dealer_id,
+        #     "review": body["review"],
+        #     "purchase": body.get("purchasecheck", False),
+        #     "purchase_date": body["purchasedate"],
+        #     "car_make": body["car_make"],
+        #     "car_model": body["car_model"],
+        #     "car_year": body["car_year"]
+        # }
+
+        review = {
+        "id": 1150,
+        "name": "lol Das",
+        "dealership": 19,
+        "review": "Loved the customer service.",
+        "purchase": True,
+        "another": "field",
+        "purchase_date": "12/03/2023",
+        "car_make": "Mahindra",
+        "car_model": "Scorpio",
+        "car_year": 2023
+    }
+
+        json_payload = {"review": review}
+        json_result = post_request(url, json_payload, dealerId=dealer_id)
+
+        # print(json_result)
+
+        review_result = json.dumps(json_result, indent=2)
+
+        return HttpResponse(review_result)
+    
+    return HttpResponse("Unauthorized", status=401)

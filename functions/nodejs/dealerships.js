@@ -51,7 +51,9 @@ async function main(params) {
             address: doc.address,
             zip: doc.zip,
             lat: doc.lat,
-            long: doc.long
+            long: doc.long,
+            full_name: doc.full_name,
+            short_name: doc.short_name
         }));
         if (filteredData.length < 1) {
             return {statusCode: 404, body: {

@@ -57,7 +57,9 @@ def main(params : dict):
                 }
             }
 
-        return {"body": filteredData }
+        return {"body": {
+            "reviews": filteredData
+            } }
     
     # post new review
     elif REQ_METHOD == "post":
@@ -76,7 +78,15 @@ def main(params : dict):
             document=review
         ).get_result()
         
-        return {"body" : data }
+        if (data.get("ok") != True):
+            return {
+                "statusCode" : 400,
+                "body" : {
+                    "mssg" : "failed to post review"
+                }
+            }
+
+        return {"body" : review }
 
     return {
         "statusCode" : 400,
