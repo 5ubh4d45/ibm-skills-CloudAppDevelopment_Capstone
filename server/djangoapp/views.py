@@ -138,35 +138,35 @@ def add_review(request: HttpRequest, dealer_id):
     
     # only authenticated users can submit a review
 
-    if request.method == "GET" and request.user.is_authenticated:
+    if request.method == "POST" and request.user.is_authenticated:
         url = "https://au-syd.functions.appdomain.cloud/api/v1/web/330077d3-9d1d-4995-a6ca-bcdbccd5086f/api/review"
         
-        # body: dict = json.loads(request.body)
-
-        # review = {
-        #     "id": body["id"],
-        #     "name": body["name"],
-        #     "dealership": dealer_id,
-        #     "review": body["review"],
-        #     "purchase": body.get("purchasecheck", False),
-        #     "purchase_date": body["purchasedate"],
-        #     "car_make": body["car_make"],
-        #     "car_model": body["car_model"],
-        #     "car_year": body["car_year"]
-        # }
+        body: dict = json.loads(request.body)
 
         review = {
-        "id": 1150,
-        "name": "lol Das",
-        "dealership": 19,
-        "review": "Loved the customer service.",
-        "purchase": True,
-        "another": "field",
-        "purchase_date": "12/03/2023",
-        "car_make": "Mahindra",
-        "car_model": "Scorpio",
-        "car_year": 2023
-    }
+            "id": body["id"],
+            "name": body["name"],
+            "dealership": dealer_id,
+            "review": body["review"],
+            "purchase": body.get("purchasecheck", False),
+            "purchase_date": body["purchasedate"],
+            "car_make": body["car_make"],
+            "car_model": body["car_model"],
+            "car_year": body["car_year"]
+        }
+
+        # review = {
+        # "id": 1150,
+        # "name": "lol Das",
+        # "dealership": 19,
+        # "review": "Loved the customer service.",
+        # "purchase": True,
+        # "another": "field",
+        # "purchase_date": "12/03/2023",
+        # "car_make": "Mahindra",
+        # "car_model": "Scorpio",
+        # "car_year": 2023
+    # }
 
         json_payload = {"review": review}
         json_result = post_request(url, json_payload, dealerId=dealer_id)
