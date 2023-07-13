@@ -119,7 +119,7 @@ def get_dealer_reviews_from_cf(url, dealer_id) -> list[DealerReview]:
             
             # Create a CarDealer object with values in `doc` object
             review_obj = DealerReview(
-                id=review["id"],
+                id=review.get("id", None),
                 review=review["review"],
                 dealership=review["dealership"],
                 name=review["name"],
@@ -157,15 +157,15 @@ def analyze_review_sentiments(dealer_review_text) -> str:
         response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
                                     auth=HTTPBasicAuth('apikey', api_key))
         
-        print(f"Dealer Review: {dealer_review_text}")
+        # print(f"Dealer Review: {dealer_review_text}")
         
         sentiment_score = json.loads(response.text)["sentiment"]["document"]["score"]
         sentiment_label = json.loads(response.text)["sentiment"]["document"]["label"]
         
         status_code = response.status_code
-        print(f"NLU With status {status_code} ")
-        
-        print(f"Sentiment label: {sentiment_label} Sentiment score: {sentiment_score}")
+        # print(f"NLU With status {status_code} ")
+    
+        # print(f"Sentiment label: {sentiment_label} Sentiment score: {sentiment_score}")
 
         # print(json.dumps(response.text, indent=2))
         return sentiment_label
