@@ -104,5 +104,48 @@
       </div>
     </nav>
     <!--Add a dealer table here -->
+    <div class="container-fluid px-xxl-5">
+      <div class="row">
+        <div class="col">
+          <table
+            id="table"
+            class="table table-bordered table-hover text-center"
+            data-toggle="table"
+            data-search="true"
+            data-filter-control="true"
+            data-show-export="true"
+            data-click-to-select="true"
+            data-toolbar="#toolbar"
+            data-show-columns="true"
+            data-show-filter="true"
+            >
+            <thead class="table-active">
+              <tr>
+                <th data-field="id" data-filter-control="input" data-sortable="true">ID</th>
+                <th data-field="name" data-filter-control="input" data-sortable="true">Dealership Name</th>
+                <th data-field="address" data-filter-control="input" data-sortable="true">Address</th>
+                <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
+                <th data-field="state" data-filter-control="input" data-sortable="true">State</th>
+                <th data-field="zip" data-filter-control="input" data-sortable="true">Zip</th>
+                <!-- add a list to the details page -->
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for dealer in dealerships %}
+              <tr>
+                <td>{{ dealer.id }}</td>
+                <td>{{ dealer.full_name }}</td>
+                <td>{{ dealer.address }}</td>
+                <td>{{ dealer.city }}</td>
+                <td>{{ dealer.state }}</td>
+                <td>{{ dealer.zip }}</td>
+                <td><a class="btn btn-outline-dark" href="{% url 'djangoapp:dealer_details' dealer.id %}">Reviews</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
   </body>
 </html>
