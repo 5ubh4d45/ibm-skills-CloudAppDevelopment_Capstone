@@ -105,10 +105,12 @@ def get_dealerships(request : HttpRequest):
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # dealerships = get_dealers_from_cf_by_state(url, "Texas")
-        # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        
+        context["dealerships"] = dealerships
+
+        # Return the index.html with dealers list
+        return render(request, 'djangoapp/index.html', context)
+
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
