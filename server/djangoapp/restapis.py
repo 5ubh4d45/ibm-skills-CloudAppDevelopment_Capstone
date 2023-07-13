@@ -111,7 +111,7 @@ def get_dealer_reviews_from_cf(url, dealer_id) -> list[DealerReview]:
     
     # print(json_result)
 
-    if json_result:
+    if json_result and json_result.get("reviews"):
         # Get the row list in JSON as dealers
         reviews: list[dict] = json_result["reviews"]
         # For each dealer object

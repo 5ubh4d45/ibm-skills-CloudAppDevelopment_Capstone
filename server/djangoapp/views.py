@@ -123,12 +123,22 @@ def get_dealer_details(request: HttpRequest, dealer_id):
         # Get dealer's reviewfrom the URL
         reviews = get_dealer_reviews_from_cf(url, dealer_id=dealer_id)
 
-        # add review key from each reviews for a dealer to a result list
-        result = []
-        for review in reviews:
-            result.append(f"Review: {review.review} Sentiment: {review.sentiment} \n")
+        # inefficient way to get dealership details
+        # fetching all dealerships and then filtering by id
+        # can be improved by fetching only the required dealership
+        url_d = "https://au-syd.functions.appdomain.cloud/api/v1/web/330077d3-9d1d-4995-a6ca-bcdbccd5086f/api/dealership"
+        # Get dealers from the URL
+        dealerships = get_dealers_from_cf(url_d)
+        context["dealership"] = [dealer for dealer in dealerships if dealer.id == dealer_id][0]
+
+        if (reviews is None or len(reviews) == 0):
+            reviews = []
+            context["dealership"] = None
         
-        return HttpResponse(result)
+        context["reviews"] = reviews
+        context["dealer_id"] = dealer_id
+
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 
 
