@@ -109,7 +109,7 @@
         <div class="col">
           <table
             id="table"
-            class="table table-bordered table-hover"
+            class="table table-bordered table-hover text-center"
             data-toggle="table"
             data-search="true"
             data-filter-control="true"
@@ -127,6 +127,8 @@
                 <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
                 <th data-field="state" data-filter-control="input" data-sortable="true">State</th>
                 <th data-field="zip" data-filter-control="input" data-sortable="true">Zip</th>
+                <!-- add a list to the details page -->
+                <th>Details</th>
               </tr>
             </thead>
             <tbody>
@@ -138,6 +140,7 @@
                 <td>{{ dealer.city }}</td>
                 <td>{{ dealer.state }}</td>
                 <td>{{ dealer.zip }}</td>
+                <td><a class="btn btn-outline-dark" href="{% url 'djangoapp:dealer_details' dealer.id %}">Reviews</a></td>
               </tr>
               {% endfor %}
             </tbody>
