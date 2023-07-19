@@ -8,11 +8,11 @@ djangoapp/migrations/__pycache__/
 djangobackend/__pycache__/
 
 # igonre venv files
-venv/
+venv
 
 # Ignore ide settings
-.idea/
-.vscode/
+.idea
+.vscode
 
 # Ignore database files
 *.sqlite3
